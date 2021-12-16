@@ -14,3 +14,17 @@ export function loadToys() {
     }
   };
 }
+
+export function onSetFilter(filterBy) {
+  return async (dispatch) => {
+      try {
+          const toys = await toyService.query(filterBy)
+          dispatch({
+              type: 'SET_TOYS',
+              toys
+          })
+      } catch (err) {
+          console.log('Can not filter toys', err)
+      }
+  }
+}
