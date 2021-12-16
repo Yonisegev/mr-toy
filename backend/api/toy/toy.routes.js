@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.get('/', log, getToys)
 router.get('/:id', getToyById)
-router.post('/', requireAuth, requireAdmin, addToy)
+router.post('/',/*  requireAuth, requireAdmin, */ addToy)
 router.put('/', requireAuth, requireAdmin, updateToy)
 router.delete('/:id', requireAuth, requireAdmin, removeToy)
 
