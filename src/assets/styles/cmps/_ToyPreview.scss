@@ -1,0 +1,88 @@
+.toy-preview {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px #e4a313 solid;
+  width: 250px;
+  height: 180px;
+  padding: 0 20px;
+  background: rgb(231, 231, 231);
+  text-align: center;
+  box-shadow: 0 0 3px #e4a313;
+  color: #a19f9bd0;
+
+  h1:first-child {
+    font-size: rem(21px);
+    color: #00a7d6;
+    margin-bottom: 0;
+  }
+
+  h1:nth-child(2) {
+    margin: 0;
+  }
+
+  h1:nth-child(3) {
+    font-size: 1.1rem;
+    color: #86448d;
+    text-align: right;
+    margin-bottom: rem(10px);
+    align-self: flex-end;
+  }
+
+  .stock {
+    position: absolute;
+    background-color: rgb(168, 5, 5);
+    width: 100%;
+    height: 40%;
+    line-height: rem(60px);
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 900;
+    bottom: -1px;
+    border: 1px solid #e4a313;
+    border-top: 5px solid #e4a313;
+  }
+
+  .btns {
+    position: absolute;
+    left: 5px;
+    top: -25px;
+    pointer-events: none;
+    opacity: 0;
+    transition: 0.5s;
+  }
+
+  .btns.show {
+    opacity: 1;
+    top: 5px;
+    pointer-events: unset;
+  }
+
+  .btns {
+    button {
+      border: 0;
+      background-color: transparent;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: darkgray;
+      transition: color 0.5s;
+    }
+
+    .remove-btn:hover {
+      color: rgb(168, 5, 5);
+      text-shadow: 0 0 5px rgb(243, 165, 165);
+    }
+
+    .details-btn:hover {
+      color: rgb(55, 55, 189);
+      text-shadow: 0 0 5px rgb(165, 191, 243);
+    }
+
+    .edit-btn:hover {
+      color: green;
+      text-shadow: 0 0 5px rgb(165, 243, 195);
+    }
+  }
+}

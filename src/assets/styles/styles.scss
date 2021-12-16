@@ -1,12 +1,17 @@
 // Setup
-@import "setup/variables";
-@import "setup/functions";
-@import "setup/mixins";
-@import "setup/typography";
-// Basics
-@import "basics/base";
-@import "basics/buttons";
-@import "basics/helpers";
-// Cmps
+@import 'setup/variables';
+@import 'setup/functions';
+@import 'setup/mixins';
+@import 'setup/typography';
 
-// Pages
+// Basics
+@import 'basics/base';
+@import 'basics/buttons';
+@import 'basics/helpers';
+
+// Views
+@import 'views/ToyApp';
+
+// Cmps
+@import 'cmps/ToyList';
+@import 'cmps/ToyPreview';
