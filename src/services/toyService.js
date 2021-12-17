@@ -4,7 +4,7 @@ const axios = Axios.create({
   withCredentials: true,
 });
 
-const glabels = [
+const gLabels = [
   'On wheels',
   'Car',
   'Box game',
@@ -17,16 +17,17 @@ const glabels = [
   'Multi participants',
   'Sports',
   'Battery Powered',
-];
+].sort();
 
 export const toyService = {
   query,
-  // removeToy,
+  removeToy,
   addToy,
-  // updateToy,
+  updateToy,
   getToyById,
-  getlabels,
+  getLabels,
   addReview,
+  toyValidator,
 };
 
 async function query(filterBy = {}) {
@@ -54,18 +55,18 @@ async function getToyById(toyId) {
   }
 }
 
-// async function removeToy(toyId) {
-//   const user = userService.getLoggedinUser();
-//   try {
-//     const res = await axios.delete(`http://127.0.0.1:3030/api/toy/${toyId}`, {
-//       data: { user },
-//     });
-//     return res;
-//   } catch (err) {
-//     console.log('can not delete toy from server', err);
-//     throw err;
-//   }
-// }
+async function removeToy(toyId) {
+  const user = userService.getLoggedinUser();
+  try {
+    const res = await axios.delete(`http://127.0.0.1:3030/api/toy/${toyId}`, {
+      data: { user },
+    });
+    return res;
+  } catch (err) {
+    console.log('can not delete toy from server', err);
+    throw err;
+  }
+}
 
 async function addToy(toy) {
   const user = userService.getLoggedinUser();
@@ -96,10 +97,21 @@ async function updateToy(toy, isReview = false) {
   }
 }
 
-function getlabels() {
-  return glabels.sort();
+async function getLabels() {
+  return gLabels;
 }
 
+function toyValidator(toy) {
+  const missingFields = Object.keys(toy).filter((field) => !toy[field]);
+  let message = '';
+  if (missingFields.length) {
+    message = `Missing fields - ${missingFields.join(',')}`;
+  }
+  return {
+    valid: !Boolean(message),
+    message,
+  };
+}
 function addReview(toy, review) {
   toy.reviews.unshift(review);
   return toy;

@@ -1,12 +1,12 @@
 import React from 'react';
+import { Outlet } from 'react-router';
 import './App.css';
-import { ToyApp } from './pages/ToyApp';
 
 function App() {
   return (
     <div className='App'>
       <h1>Hello!</h1>
-      <ToyApp />
+      <Outlet />
     </div>
   );
 }

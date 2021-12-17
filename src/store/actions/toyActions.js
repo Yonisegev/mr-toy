@@ -30,3 +30,33 @@ export function onAddToy(toy) {
     }
   };
 }
+export function onSetFilter(filterBy) {
+  return async (dispatch) => {
+      try {
+          const toys = await toyService.query(filterBy)
+          dispatch({
+              type: 'SET_TOYS',
+              toys
+          })
+      } catch (err) {
+          console.log('Can not filter toys', err)
+      }
+  }
+}
+
+export function onRemoveToy(toyId) {
+  return async (dispatch) => {
+      try {
+          await toyService.removeToy(toyId)
+          dispatch({
+              type: 'REMOVE_TOY',
+              toyId
+          })
+          // showSuccessMsg('Toy deleted!')
+          return toyId
+      } catch (err) {
+          console.log('Can not remove todo')
+          // showErrorMsg('Toy can not be deleted!')
+      }
+  }
+}

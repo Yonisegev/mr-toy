@@ -13,25 +13,17 @@
   box-shadow: 0 0 3px #e4a313;
   color: #a19f9bd0;
 
-  h1:first-child {
+  .toy-name {
     font-size: rem(21px);
     color: #00a7d6;
     margin-bottom: 0;
   }
 
-  h1:nth-child(2) {
+  .toy-price {
     margin: 0;
   }
 
-  h1:nth-child(3) {
-    font-size: 1.1rem;
-    color: #86448d;
-    text-align: right;
-    margin-bottom: rem(10px);
-    align-self: flex-end;
-  }
-
-  .stock {
+  .sold-out-label {
     position: absolute;
     background-color: rgb(168, 5, 5);
     width: 100%;
@@ -52,15 +44,7 @@
     pointer-events: none;
     opacity: 0;
     transition: 0.5s;
-  }
 
-  .btns.show {
-    opacity: 1;
-    top: 5px;
-    pointer-events: unset;
-  }
-
-  .btns {
     button {
       border: 0;
       background-color: transparent;
@@ -84,5 +68,11 @@
       color: green;
       text-shadow: 0 0 5px rgb(165, 243, 195);
     }
+  }
+
+  &:hover .btns {
+    opacity: 1;
+    top: 5px;
+    pointer-events: unset;
   }
 }

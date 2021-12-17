@@ -8,10 +8,13 @@
 @import 'basics/base';
 @import 'basics/buttons';
 @import 'basics/helpers';
+@import 'basics/fontAwesome';
 
 // Views
 @import 'views/ToyApp';
 
 // Cmps
+@import 'cmps/Modal';
 @import 'cmps/ToyList';
 @import 'cmps/ToyPreview';
+@import 'cmps/ToyAdd';
