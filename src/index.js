@@ -2,13 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { Provider } from 'react-redux';
-import {store} from './store/store';
+import { store } from './store/store';
 import * as serviceWorker from './serviceWorker';
 import './assets/styles/styles.scss';
+import { Route, Routes } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
+import { HomePage } from './pages/HomePage';
+import { ToyApp } from './pages/ToyApp';
+import { ToyAdd } from './cmps/ToyAdd';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<App />}>
+            <Route index element={<HomePage />} />
+            <Route path='toy' element={<ToyApp />}>
+              <Route path='add' element={<ToyAdd />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -1,0 +1,27 @@
+.toy-app {
+  text-align: center;
+  position: relative;
+
+  .add-btn {
+    border: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #00a7d6;
+    color: whitesmoke;
+    font-size: 1.4rem;
+    position: absolute;
+    top: -90px;
+    right: 50%;
+    transform: translateX(50%);
+    cursor: pointer;
+    transition: 0.5s;
+
+    &:hover {
+      height: 100px;
+      width: 100px;
+      top: -100px;
+      background-color: #4fc9eb;
+    }
+  }
+}
