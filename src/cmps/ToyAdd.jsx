@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import Select from 'react-select';
+import { useForm } from '../hooks/useForm.js';
 import { toyService } from '../services/toyService.js';
 import { onAddToy } from '../store/actions/toyActions.js';
 import { Loader } from './Loader.jsx';
@@ -17,7 +18,7 @@ export const ToyAdd = ({}) => {
   const navigate = useNavigate();
 
   //local
-  const [toy, setToy] = useState(EMPTY_TOY);
+  const { formState, setFormState, register, resetForm } = useForm(EMPTY_TOY);
   const [labelOptions, setLabelOptions] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -27,43 +28,31 @@ export const ToyAdd = ({}) => {
 
   const loadLabels = async () => {
     const labels = await toyService.getLabels();
-    const labelOptions = labels.map((label) => ({
-      value: label,
-      label: label,
+    const labelOptions = labels.map((toyLabel) => ({
+      value: toyLabel,
+      label: toyLabel,
     }));
     setLabelOptions(labelOptions);
   };
 
-  const handleChange = ({ target }) => {
-    let { value, name: field } = target;
-    if (Number.isInteger(value)) {
-      value = +value;
-    }
-    setToy((prevToy) => ({ ...prevToy, [field]: value }));
-  };
-
   const handleSelectChange = (selectedOptions) => {
     if (selectedOptions.length > 3) return;
-    setToy((prevToy) => ({
+    setFormState((prevToy) => ({
       ...prevToy,
       labels: selectedOptions,
     }));
   };
 
-  const resetToyForm = () => {
-    setToy(EMPTY_TOY);
-  };
-
   const handleAddToy = (ev) => {
     ev.preventDefault();
-    const { valid, message } = toyService.toyValidator(toy);
+    const { valid, message } = toyService.toyValidator(formState);
     if (!valid) {
       setErrorMessage(message);
       return;
     }
-    toy.labels = toy.labels.map(({ value }) => value);
-    resetToyForm();
-    dispatch(onAddToy(toy));
+    formState.labels = formState.labels.map(({ value }) => value);
+    resetForm();
+    dispatch(onAddToy(formState));
   };
 
   const onCloseAddToy = () => {
@@ -77,34 +66,30 @@ export const ToyAdd = ({}) => {
         {errorMessage && (
           <div className='error-message'>Error: {errorMessage}</div>
         )}
-        <form>
+        <form onSubmit={handleAddToy}>
           <input
+            {...register('name')}
             type='text'
-            name='name'
             placeholder='Enter toy name '
             id='name'
-            value={toy.name}
-            onChange={handleChange}
           />
 
           <input
+            {...register('price')}
             type='number'
-            name='price'
             placeholder='Enter toy price'
             id='price'
-            value={toy.price}
-            onChange={handleChange}
           />
 
           <Select
             className='label-select'
-            value={toy.labels}
+            value={formState.labels}
             isMulti
             onChange={handleSelectChange}
             options={labelOptions}
             placeholder='Choose up to 3 labels :'
           />
-          <button type='submit' className='btn-add' onClick={handleAddToy}>
+          <button type='submit' className='btn-add'>
             <span className='fas fa-plus'></span>
           </button>
 
