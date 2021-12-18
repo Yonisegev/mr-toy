@@ -29,7 +29,9 @@ export const ToyApp = () => {
     <>
       <Outlet />
       <div className='toy-app'>
-        <button className='add-btn' onClick={onOpenAddToy}></button>
+        <button className='add-btn' onClick={onOpenAddToy}>
+          Add Toy
+        </button>
         {toys.length ? <ToyList toys={toys} /> : <div>No toys to show...</div>}
       </div>
     </>
