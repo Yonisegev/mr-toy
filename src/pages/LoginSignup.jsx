@@ -140,7 +140,7 @@ const Signup = memo(({ navigate, onFormSubmit }) => {
             navigate('/login', { replace: true });
           }}
         >
-          Sign in
+          Sign in.
         </span>
       </p>
     </div>
