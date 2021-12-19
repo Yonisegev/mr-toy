@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+import { Button } from '@mui/material';
 import logo from '../assets/img/toylogo.png';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
