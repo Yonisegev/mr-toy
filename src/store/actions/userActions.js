@@ -29,3 +29,17 @@ export function onSignup(creds) {
         }
     };
 }
+
+export function onLogout() {
+    return async (dispatch) => {
+        try {
+            await userService.logout();
+            dispatch({
+                type: 'SET_USER',
+                user: null
+            });
+        } catch (err) {
+            console.log('Could not logout', err);
+        }
+    };
+}
