@@ -12,6 +12,8 @@ import { ToyApp } from './pages/ToyApp';
 import { ToyAdd } from './cmps/ToyAdd';
 import { LoginSignup } from './pages/LoginSignup';
 import { ToyEdit } from './pages/ToyEdit';
+import { ToyDetails } from './pages/ToyDetails';
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -23,8 +25,9 @@ ReactDOM.render(
               <Route path='add' element={<ToyAdd />} />
               <Route path='edit/:toyId' element={<ToyEdit />} />
             </Route>
-            <Route path="login" element={<LoginSignup />} />
-            <Route path="register" element={<LoginSignup />} />
+            <Route path='/toy/:toyId' element={<ToyDetails />} />
+            <Route path='login' element={<LoginSignup />} />
+            <Route path='register' element={<LoginSignup />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -10,8 +10,7 @@ export function onLogin(creds) {
             });
             return user;
         } catch (err) {
-            console.log('Failed to log in');
-            // TODO: Handle error
+            throw err;
         }
     };
 }
@@ -26,8 +25,21 @@ export function onSignup(creds) {
             });
             return user;
         } catch (err) {
-            console.log('Failed to signup');
-            // TODO: Handle error
+            throw err;
+        }
+    };
+}
+
+export function onLogout() {
+    return async (dispatch) => {
+        try {
+            await userService.logout();
+            dispatch({
+                type: 'SET_USER',
+                user: null
+            });
+        } catch (err) {
+            console.log('Could not logout', err);
         }
     };
 }
