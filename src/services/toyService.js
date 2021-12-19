@@ -112,6 +112,7 @@ function toyValidator(toy) {
     message,
   };
 }
+
 function addReview(toy, review) {
   toy.reviews.unshift(review);
   return toy;

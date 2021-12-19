@@ -12,6 +12,7 @@
 
 // Views
 @import 'views/ToyApp';
+@import 'views/LoginSignup';
 
 // Cmps
 @import 'cmps/AppHeader';
@@ -19,3 +20,4 @@
 @import 'cmps/ToyList';
 @import 'cmps/ToyPreview';
 @import 'cmps/ToyAdd';
+@import 'cmps/ToyFilter';

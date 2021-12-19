@@ -6,6 +6,7 @@ const logger = require('../../services/logger.service')
 async function getToys(req, res) {
     try {
         const filterBy = req.query;
+        console.log('querying')
         const toys = await toyService.query(filterBy);
         res.json(toys)
     } catch (err) {

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import Select from 'react-select';
 import { toyService } from '../services/toyService';
 import { onSetFilter } from '../store/actions/toyActions';
+import { useUpdateEffect } from '../hooks/useUpdateEffect';
 
 export const ToyFilter = () => {
   const [filterBy, setFilterBy] = useState({
@@ -15,30 +16,31 @@ export const ToyFilter = () => {
 
   useEffect(() => {
     loadLabels();
-  }, [loadLabels]);
+  }, []);
 
-  const loadLabels = useCallback(() => {
-    const labels = toyService.getLabels();
+  useUpdateEffect(() => {
+    dispatch(onSetFilter(filterBy));
+  }, [filterBy]);
+
+  const loadLabels = useCallback(async () => {
+    const labels = await toyService.getLabels();
     const options = labels.map((label) => ({
-      value: label.toLowerCase(),
+      value: label,
       label,
     }));
     setOptions(options);
-  }, [setOptions]);
+  }, []);
 
   const handleChange = ({ target: { name, value } }) => {
-    handleSetFilter(name, value);
+    setFilterBy((prevFilterBy) => ({ ...prevFilterBy, [name]: value }));
   };
 
-  const handleSelectChange = ({ value }) => {
-    if (value.length > 3) return;
-    handleSetFilter('labels', value);
-  };
-
-  const handleSetFilter = (filter, value) => {
-    const newFilter = { ...filterBy, [filter]: value };
-    setFilterBy(newFilter);
-    dispatch(onSetFilter(newFilter));
+  const handleSelectChange = (selectedOptions) => {
+    if (selectedOptions.length > 3) return;
+    setFilterBy((prevFilterBy) => ({
+      ...prevFilterBy,
+      labels: selectedOptions,
+    }));
   };
 
   const { word, type, labels } = filterBy;

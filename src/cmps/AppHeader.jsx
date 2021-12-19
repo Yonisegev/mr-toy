@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import logo from '../assets/img/toylogo.png';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
-const user = {
-  fullname: 'Reem Ben-David',
-};
 export const AppHeader = () => {
+  const { user } = useSelector((state) => state.userModule);
+  useEffect(() => {
+    console.log('user: ', user);
+  }, [user]);
   return (
     <header>
       {/* <UserMsg /> */}
