@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Loader } from '../cmps/Loader';
 import { Modal } from '../cmps/Modal';
+import { useToggle } from '../hooks/useToggle';
 
 const EMPTY_TOY = {
     name: '',
@@ -19,24 +20,26 @@ export const ToyEdit = () => {
     const { toyId } = useParams()
     const navigate = useNavigate()
     const { user } = useSelector(state => state.userModule)
-    const [toy, setToy] = useState(null)
     const [errorMessage, setErrorMessage] = useState('');
     const dispatch = useDispatch()
     const { formState, setFormState, register, resetForm } = useForm(EMPTY_TOY);
-
+    const [isLoading, setIsLoading] = useToggle(true)
 
     useEffect(() => {
         // if (!user || !user.isAdmin) return navigate('/toy')
         loadToy()
     }, [])
 
+    useEffect(()=>{
+        console.log('formStatE:',formState)
+    },[formState])
     const loadToy = async () => {
         try {
             const toy = await toyService.getToyById(toyId)
             console.log(toy);
             if (!toy) return navigate('/toy')
-            setToy(toy)
             setFormState(toy)
+            setIsLoading(false)
         } catch (err) {
             console.log(err);
             // TODO: handle error
@@ -49,7 +52,7 @@ export const ToyEdit = () => {
 
     const handleRemoveToy = (ev) => {
         ev.stopPropagation();
-        dispatch(onRemoveToy(toy._id));
+        dispatch(onRemoveToy(formState._id));
     };
 
     const handleUpdateToy = (ev) => {
@@ -68,7 +71,7 @@ export const ToyEdit = () => {
         navigate('/toy')
     }
 
-    if (!toy) return <Loader />;
+    if (isLoading) return <Loader />;
     return (
         <Modal center onClose={handleGoBack}>
             <div className='toy-details toy-edit flex column'>
@@ -85,20 +88,20 @@ export const ToyEdit = () => {
                     </h3>
 
                     <h3>Available :
-                        <select name='inStock' value={toy.inStock ? true : ''} onChange={handleChange}>
+                        <select name='inStock' value={formState.inStock ? true : ''} onChange={handleChange}>
                             <option value={true}>Yes!</option>
                             <option value=''>Soon...</option>
                         </select>
                     </h3>
 
-                    {!!toy.labels?.length && <h3>Categories : {toy.labels.join(' | ')} </h3>}
+                    {Boolean(formState.labels?.length) && <h3>Categories : {formState.labels.join(' | ')} </h3>}
 
                     <div className='details-btns'>
                         <button className='save-btn' onClick={handleUpdateToy}>
                             <span className='fas fa-save'></span>
                         </button>
 
-                        <Link to={`/toy/${toy._id}`}><button className='btn edit-btn'>
+                        <Link to={`/toy/${formState._id}`}><button className='btn edit-btn'>
                             <span className='fas fa-info-circle' ></span>
                         </button>
                         </Link>

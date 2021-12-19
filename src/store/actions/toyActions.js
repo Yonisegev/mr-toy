@@ -35,7 +35,6 @@ export function onUpdateToy(toy, isReview) {
   return async (dispatch) => {
     try {
       const savedToy = await toyService.updateToy(toy, isReview);
-      console.log('Updated toy', savedToy);
       dispatch({
         type: 'UPDATE_TOY',
         toy: savedToy,
@@ -80,19 +79,4 @@ export function onRemoveToy(toyId) {
 }
 
 
-export function onUpdateToy(toy, isReview) {
-  return async (dispatch) => {
-    try {
-      const savedToy = await toyService.updateToy(toy, isReview)
-      console.log('Updated toy', savedToy)
-      dispatch({
-        type: 'UPDATE_TOY',
-        toy: savedToy
-      })
-      // showSuccessMsg('Updated toy!')
-    } catch (err) {
-      console.log('Can not update toy', err)
-      // showErrorMsg('Can not update toy')
-    }
-  }
-}
+
