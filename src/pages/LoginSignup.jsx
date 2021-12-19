@@ -13,7 +13,7 @@ export const LoginSignup = () => {
 
   useEffect(() => {
     const path = location.pathname.slice(1);
-    path === 'register' ? setIsLogin(false) : setIsLogin(true);
+    setIsLogin(path !== 'register');
   }, [location]);
 
   const onFormSubmit = (ev, creds) => {
@@ -38,14 +38,18 @@ export const LoginSignup = () => {
   );
 };
 
-const Login = memo(({ navigate, onFormSubmit }) => {
+/*  
+memo is un-needed, since anyway LoginSignup only state is isLogin, so in any case LoginSignup re-renders,
+we will want Login/Signup to render as well.
+*/
+const Login = ({ navigate, onFormSubmit }) => {
   const initialValues = {
     username: '',
     password: '',
   };
   const { formState, register, resetForm } = useForm(initialValues);
 
-  const onLogin = async ev => {
+  const onLogin = async (ev) => {
     try {
       await onFormSubmit(ev, formState);
       resetForm();
@@ -60,14 +64,14 @@ const Login = memo(({ navigate, onFormSubmit }) => {
       <form onSubmit={onLogin} className='login-form flex column'>
         <TextField
           {...register('username')}
-          type={'text'}
+          type='text'
           label='Username'
           variant='standard'
           autoComplete='off'
         />
         <TextField
           {...register('password')}
-          type={'password'}
+          type='password'
           label='Password'
           variant='standard'
         />
@@ -80,16 +84,15 @@ const Login = memo(({ navigate, onFormSubmit }) => {
         <span
           onClick={() => {
             navigate('/register', { replace: true });
-          }}
-        >
+          }}>
           Register now.
         </span>
       </p>
     </div>
   );
-});
+};
 
-const Signup = memo(({ navigate, onFormSubmit }) => {
+const Signup = ({ navigate, onFormSubmit }) => {
   const initialValues = {
     fullname: '',
     username: '',
@@ -97,7 +100,7 @@ const Signup = memo(({ navigate, onFormSubmit }) => {
   };
   const { formState, register, resetForm } = useForm(initialValues);
 
-  const onSignup = async ev => {
+  const onSignup = async (ev) => {
     try {
       await onFormSubmit(ev, formState);
       resetForm();
@@ -138,11 +141,16 @@ const Signup = memo(({ navigate, onFormSubmit }) => {
         <span
           onClick={() => {
             navigate('/login', { replace: true });
+<<<<<<< HEAD
           }}
         >
           Sign in.
+=======
+          }}>
+          Sign in
+>>>>>>> 9e661900e65c50e557cc876bd656163c621e6eba
         </span>
       </p>
     </div>
   );
-});
+};

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router';
 import { Loader } from '../cmps/Loader';
 import { ToyAdd } from '../cmps/ToyAdd';
+import { ToyFilter } from '../cmps/ToyFilter';
 import { ToyList } from '../cmps/ToyList';
 import { useToggle } from '../hooks/useToggle';
 import { loadToys } from '../store/actions/toyActions';
@@ -29,7 +30,10 @@ export const ToyApp = () => {
     <>
       <Outlet />
       <div className='toy-app'>
-        <button className='add-btn' onClick={onOpenAddToy}></button>
+        <button className='add-btn' onClick={onOpenAddToy}>
+          Add Toy
+        </button>
+        <ToyFilter />
         {toys.length ? <ToyList toys={toys} /> : <div>No toys to show...</div>}
       </div>
     </>
