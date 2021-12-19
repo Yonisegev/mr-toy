@@ -1,18 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { onRemoveToy } from '../store/actions/toyActions';
+import { Modal } from './Modal';
+import { ReviewAdd } from './ReviewAdd';
+import { ReviewList } from './ReviewList';
 
 export const ToyPreview = ({ toy }) => {
   const dispatch = useDispatch();
+  const [isShown, setIsShown] = useState(false)
 
   const handleRemoveToy = (ev) => {
     ev.stopPropagation();
     dispatch(onRemoveToy(toy._id));
   };
 
+  const onAddReview = () => {
+
+  }
+
   return (
-    <section className='toy-preview'>
+    <section
+      className='toy-preview'
+      onClick={() => setIsShown(!isShown)}
+    >
+      {isShown &&
+        <Modal center onClose={() => setIsShown(false)}>
+          <div className='review-container'>
+            <ReviewAdd toy={toy} onUpdateToy={onAddReview} />
+            <ReviewList className='review-list' reviews={toy.reviews} />
+          </div>
+        </Modal>
+      }
       <h1 className='toy-name'>{toy.name}</h1>
       <h1 className='toy-price'>Price: ${toy.price}</h1>
       {!toy.inStock && <div className='sold-out-label'>Sold Out!</div>}
@@ -40,6 +59,8 @@ export const ToyPreview = ({ toy }) => {
     </section>
   );
 };
+
+
 class _ToyPreview extends React.Component {
   state = {
     isShown: false,
