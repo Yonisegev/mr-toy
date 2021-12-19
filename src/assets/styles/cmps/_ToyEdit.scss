@@ -1,0 +1,48 @@
+.toy-edit {
+    border-radius: 5px;
+    padding: 20px 0px 20px 20px;
+    margin: 0 auto 50px;
+    width: 500px;
+    background-color: lightgray;
+    display: flex;
+    box-shadow: 0 0 5px #e4a313;
+
+    .error-message {
+        color: $clr-danger;
+        margin-bottom: 20px;
+    }
+
+    input {
+        height: 40px;
+        border-radius: 5px;
+        outline: 0;
+        border: 0;
+        padding: 10px;
+        margin-inline-end: 10px;
+        margin-bottom: 10px;
+    }
+
+    button {
+        border: 0;
+        height: 40px;
+        width: 40px;
+        align-self: center;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        color: whitesmoke;
+        cursor: pointer;
+        transition: transform 0.3s;
+
+        &.save-btn {
+            margin-inline-end: 5px;
+            background-color: #24e413;
+        }
+        &.back-btn {
+            background-color: #e41313;
+        }
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+}
