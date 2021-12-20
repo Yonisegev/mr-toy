@@ -18,7 +18,7 @@ export const ReviewAdd = ({ toy, onAdd }) => {
 
     const { user } = useSelector((state) => state.userModule);
 
-    const { formState, setFormState, register, resetForm } = useForm(EMPTY_REVIEW);
+    const { formState, setFormState, register } = useForm(EMPTY_REVIEW);
 
     const [isAdd, setIsAdd] = useState(false)
 
@@ -32,10 +32,19 @@ export const ReviewAdd = ({ toy, onAdd }) => {
         }))
     }, [])
 
-    const saveReview = (ev) => {
+    const resetForm = () => {
+        setFormState((prev) => ({
+            ...prev,
+            userId: user._id,
+            username: user.fullname,
+            toyId: toy._id,
+            toyName: toy.name
+        }))
+    }
+    const saveReview = async (ev) => {
         ev.preventDefault();
         const review = formState
-        reviewService.add(review)
+        await reviewService.add(review)
         resetForm()
         onAdd()
         onToggleAddReview()

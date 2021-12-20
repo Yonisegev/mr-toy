@@ -14,7 +14,10 @@ const COLLECTION_NAME = 'review';
 async function query(toyId) {
     const collection = await dbService.getCollection(COLLECTION_NAME)
     try {
-        return await collection.find({ toyId }).toArray();
+        
+        const reviews = await collection.find({ toyId }).toArray();
+        console.log('reviews: ', reviews)
+        return reviews
     } catch (err) {
         console.log('ERROR: cannot find reviews')
         throw err;
@@ -57,6 +60,7 @@ async function add(review) {
 async function _getToyReviews(toyId) {
     console.log('reviews for toyId: ', toyId);
     const collection = await dbService.getCollection(COLLECTION_NAME)
+    // return await collection.find({ toyId: ObjectId(toyId) }).toArray();
     return await collection.aggregate([ // array of mongo aggregation operators
         {
             $match: { toyId: ObjectId(toyId) }// find all the reviews that has the matching toyId

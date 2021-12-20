@@ -38,6 +38,7 @@ export const ToyDetails = () => {
   const loadReviews = async () => {
     try {
       const reviews = await reviewService.query(toyId);
+      console.log('fetched reviews: ', reviews)
       setReviews(reviews)
     } catch (err) {
       throw err;
@@ -110,7 +111,7 @@ export const ToyDetails = () => {
       </div>
 
       <div className='reviews-container'>
-        <ReviewAdd toy={toy} onAdd={() => { loadToy(); loadReviews() }} />
+        <ReviewAdd toy={toy} onAdd={() => { loadReviews(); loadToy() }} />
         <ReviewList reviews={reviews} />
       </div>
     </section>
