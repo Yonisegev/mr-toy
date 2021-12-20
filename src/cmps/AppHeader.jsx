@@ -1,9 +1,18 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { onLogout } from '../store/actions/userActions';
 
 export const AppHeader = () => {
-  const { user } = useSelector((state) => state.userModule);
+  const { user } = useSelector(state => state.userModule);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('user: ', user);
+  }, [user]);
+
   return (
     <header>
       {/* <UserMsg /> */}
@@ -29,10 +38,11 @@ export const AppHeader = () => {
             <>
               Welcome {user.fullname} <br />
               <Button
-                onClick={() => this.props.onLogout()}
+                onClick={() => dispatch(onLogout())}
                 variant='contained'
                 className='logout-btn'
-                size='small'>
+                size='small'
+              >
                 Logout
               </Button>
             </>

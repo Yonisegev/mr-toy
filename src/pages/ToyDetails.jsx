@@ -4,6 +4,9 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Loader } from '../cmps/Loader';
+import { ReviewAdd } from '../cmps/ReviewAdd';
+import { ReviewList } from '../cmps/ReviewList';
+import { reviewService } from '../services/reviewService';
 import { toyService } from '../services/toyService';
 import { onRemoveToy, onUpdateToy } from '../store/actions/toyActions';
 
@@ -15,9 +18,11 @@ export const ToyDetails = () => {
   const { user } = useSelector((state) => state.userModule);
 
   const [toy, setToy] = useState(null);
+  const [reviews, setReviews] = useState([])
 
   useEffect(() => {
     loadToy();
+    loadReviews()
   }, []);
 
   const loadToy = async () => {
@@ -25,6 +30,16 @@ export const ToyDetails = () => {
       const toy = await toyService.getToyById(toyId);
       if (!toy) return navigate('/toy');
       setToy(toy);
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  const loadReviews = async () => {
+    try {
+      const reviews = await reviewService.query(toyId);
+      console.log('fetched reviews: ', reviews)
+      setReviews(reviews)
     } catch (err) {
       throw err;
     }
@@ -41,7 +56,7 @@ export const ToyDetails = () => {
 
   const handleUpdateToy = async () => {
     try {
-      await dispatch(onUpdateToy(toy, true));
+      await dispatch(onUpdateToy(toy));
     } catch (err) {
       throw err;
     }
@@ -95,10 +110,10 @@ export const ToyDetails = () => {
         </div>
       </div>
 
-      {/* <div className='reviews-container'>
-        <ReviewAdd toy={toy} onUpdateToy={handleUpdateToy} user={user} />
-        <ReviewList reviews={toy.reviews} />
-      </div> */}
+      <div className='reviews-container'>
+        <ReviewAdd toy={toy} onAdd={() => { loadReviews(); loadToy() }} />
+        <ReviewList reviews={reviews} />
+      </div>
     </section>
   );
 };

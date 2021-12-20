@@ -30,12 +30,14 @@ export const toyService = {
   toyValidator,
 };
 
+const BASE_URL = 'http://127.0.0.1:3030/api/toy'
+
 async function query(filterBy = {}) {
   try {
     const filter = { ...filterBy };
     if (filter.labels)
       filter.labels = filter.labels.map((label) => label.label);
-    const { data } = await axios.get('http://127.0.0.1:3030/api/toy', {
+    const { data } = await axios.get(BASE_URL, {
       params: filter,
     });
     return data;
@@ -47,7 +49,7 @@ async function query(filterBy = {}) {
 
 async function getToyById(toyId) {
   try {
-    const res = await axios.get(`http://127.0.0.1:3030/api/toy/${toyId}`);
+    const res = await axios.get(`${BASE_URL}/${toyId}`);
     return res.data;
   } catch (err) {
     console.log('can not read toy from server', err);
@@ -58,7 +60,7 @@ async function getToyById(toyId) {
 async function removeToy(toyId) {
   const user = userService.getLoggedinUser();
   try {
-    const res = await axios.delete(`http://127.0.0.1:3030/api/toy/${toyId}`, {
+    const res = await axios.delete(`${BASE_URL}/${toyId}`, {
       data: { user },
     });
     return res;
@@ -71,7 +73,7 @@ async function removeToy(toyId) {
 async function addToy(toy) {
   const user = userService.getLoggedinUser();
   try {
-    const res = await axios.post('http://127.0.0.1:3030/api/toy', {
+    const res = await axios.post(BASE_URL, {
       toy,
       user,
     });
@@ -82,13 +84,12 @@ async function addToy(toy) {
   }
 }
 
-async function updateToy(toy, isReview = false) {
+async function updateToy(toy) {
   const user = userService.getLoggedinUser();
   try {
-    const res = await axios.put('http://127.0.0.1:3030/api/toy', {
+    const res = await axios.put(BASE_URL, {
       toy,
-      user,
-      isReview,
+      user
     });
     return res.data;
   } catch (err) {
@@ -114,6 +115,7 @@ function toyValidator(toy) {
 }
 
 function addReview(toy, review) {
+  console.log('toy', toy)
   toy.reviews.unshift(review);
   return toy;
 }

@@ -17,29 +17,20 @@ export const LoginSignup = () => {
   }, [location]);
 
   const onFormSubmit = async (creds, { setSubmitting }) => {
-    if (isLogin) {
-      try {
-        await dispatch(onLogin(creds));
-        handleFormSubmissionSuccess(setSubmitting);
-      } catch (err) {
-        setError('Wrong username/password. Please try again.');
-      }
-    } else {
-      try {
-        await dispatch(onSignup(creds));
-        handleFormSubmissionSuccess(setSubmitting);
-      } catch (err) {
-        // This is bad - should check if user exists or if it was a server problem
-        setError('Failed to sign up. Please try again.');
-      }
-    }
+    try {
+      await dispatch(isLogin ? onLogin(creds) : onSignup(creds));
+      navigate('/toy');
+      // handleFormSubmissionSuccess(setSubmitting);
+    } catch (err) {
+     const errorMsg = isLogin
+        ? 'Wrong username/password. Please try again.'
+        : 'Failed to sign up. Please try again.';
+      setSubmitting(false);
+      setError(errorMsg)
+    } 
   };
 
-  const handleFormSubmissionSuccess = setSubmitting => {
-    setSubmitting(false);
-    setError('');
-    navigate('/toy');
-  };
+  const handleFormSubmissionSuccess = setSubmitting => {};
 
   return (
     <section className='login-signup'>

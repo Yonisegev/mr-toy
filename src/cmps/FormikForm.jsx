@@ -31,11 +31,7 @@ export const FormikForm = ({
     }
     return errors;
   };
-
-  for (let field of fields) {
-    console.log(field)
-  }
-
+  
   return (
     <Formik
       initialValues={initialValues}
