@@ -34,12 +34,7 @@ export function onAddToy(toy) {
 export function onUpdateToy(toy) {
   return async (dispatch) => {
     try {
-<<<<<<< HEAD
       const savedToy = await toyService.updateToy(toy);
-      console.log('Updated toy', savedToy);
-=======
-      const savedToy = await toyService.updateToy(toy, isReview);
->>>>>>> a3ac87eb49ffbdb75873902723681f56a864219a
       dispatch({
         type: 'UPDATE_TOY',
         toy: savedToy,

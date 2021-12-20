@@ -43,48 +43,4 @@ export const ToyPreview = ({ toy }) => {
     </section>
   );
 };
-<<<<<<< HEAD
-
-
-class _ToyPreview extends React.Component {
-  state = {
-    isShown: false,
-  };
-
-  onEnter = () => {
-    this.setState((prevState) => ({ ...prevState, isShown: true }));
-  };
-
-  onLeave = () => {
-    this.setState((prevState) => ({ ...prevState, isShown: false }));
-  };
-
-  render() {
-    const { toy, onRemoveToy, user } = this.props;
-    return (
-      <section
-        className='toy-preview'
-        onMouseEnter={this.onEnter}
-        onMouseLeave={this.onLeave}>
-        <h1>{toy.name}</h1>
-        <h1>{toy.labels.join(' | ')}</h1>
-        <h1>Price : ${toy.price}</h1>
-        {!toy.inStock && <div className='stock'>Sold Out!</div>}
-
-        <div className={`btns ${this.state.isShown ? 'show' : ''}`}>
-          <Link to={`/toy/${toy._id}`}>
-            <button className='btn details-btn'>
-              <span className='fas fa-info-circle'></span>
-            </button>
-          </Link>
-
-          {user && user.isAdmin && (
-            <Link to={`/toy/edit/${toy._id}`}>
-              <button className='btn edit-btn'>
-                <span className='fas fa-edit'></span>
-              </button>
-            </Link>
-          )}
-=======
->>>>>>> a3ac87eb49ffbdb75873902723681f56a864219a
 
