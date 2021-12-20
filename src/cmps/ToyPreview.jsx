@@ -43,6 +43,7 @@ export const ToyPreview = ({ toy }) => {
     </section>
   );
 };
+<<<<<<< HEAD
 
 
 class _ToyPreview extends React.Component {
@@ -84,19 +85,6 @@ class _ToyPreview extends React.Component {
               </button>
             </Link>
           )}
+=======
+>>>>>>> a3ac87eb49ffbdb75873902723681f56a864219a
 
-          {user && user.isAdmin && (
-            <button
-              className='btn remove-btn'
-              onClick={(event) => {
-                event.stopPropagation();
-                onRemoveToy(toy._id);
-              }}>
-              <span className='fas fa-trash'></span>
-            </button>
-          )}
-        </div>
-      </section>
-    );
-  }
-}

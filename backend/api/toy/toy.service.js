@@ -60,10 +60,12 @@ async function add(toy) {
 
 async function update(toy) {
   try {
-    var id = ObjectId(toy._id);
-    delete toy._id;
+    const newToy = {
+      ...toy,
+      _id: ObjectId(toy._id),
+    }
     const collection = await dbService.getCollection('toy');
-    await collection.updateOne({ _id: id }, { $set: { ...toy } });
+    await collection.updateOne({ _id: newToy._id }, { $set: newToy });
     return toy;
   } catch (err) {
     logger.error(`Can not update toy ${toy._id}`, err);

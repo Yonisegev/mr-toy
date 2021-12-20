@@ -34,8 +34,12 @@ export function onAddToy(toy) {
 export function onUpdateToy(toy) {
   return async (dispatch) => {
     try {
+<<<<<<< HEAD
       const savedToy = await toyService.updateToy(toy);
       console.log('Updated toy', savedToy);
+=======
+      const savedToy = await toyService.updateToy(toy, isReview);
+>>>>>>> a3ac87eb49ffbdb75873902723681f56a864219a
       dispatch({
         type: 'UPDATE_TOY',
         toy: savedToy,
@@ -65,16 +69,19 @@ export function onSetFilter(filterBy) {
 export function onRemoveToy(toyId) {
   return async (dispatch) => {
     try {
-      await toyService.removeToy(toyId);
+      await toyService.removeToy(toyId)
       dispatch({
         type: 'REMOVE_TOY',
-        toyId,
-      });
+        toyId
+      })
       // showSuccessMsg('Toy deleted!')
-      return toyId;
+      return toyId
     } catch (err) {
-      console.log('Can not remove todo');
+      console.log('Can not remove todo')
       // showErrorMsg('Toy can not be deleted!')
     }
-  };
+  }
 }
+
+
+
