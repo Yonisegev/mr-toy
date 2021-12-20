@@ -15,10 +15,10 @@ export function toyReducer(state = initialState, action) {
     case 'ADD_TOY':
       return { ...state, toys: [action.toy, ...state.toys] };
     case 'UPDATE_TOY':
+      console.log('action.toy:',action.toy)
       return {
         ...state,
-        toys: state.toys.map((toy) =>
-          toy._id === action.toy._id ? action.toy : toy
+        toys: state.toys.map((toy) => (toy._id === action.toy._id ? action.toy : toy)
         ),
       };
     default:
