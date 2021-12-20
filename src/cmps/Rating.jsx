@@ -1,39 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-export class Rating extends React.Component {
-    state = {
-        rating: "",
-        hover: "",
-    };
+export const Rating = ({ onSaveRate }) => {
 
-    setRating = (ev, idx) => {
-        ev.preventDefault();
-        this.setState({ rating: idx });
-        this.props.onSaveRate(idx);
-    };
+    const [rating, setRating] = useState('')
+    const [hover, setHover] = useState('')
 
-    setHover = (idx) => {
-        this.setState({ hover: idx });
-    };
-
-    render() {
-        const { hover, rating } = this.state;
-        return (
-            <div className="star-rating">
-                {[...Array(5)].map((star, idx) => {
-                    idx += 1;
-                    return (
-                        <button
-                            key={idx}
-                            className={idx <= (hover || rating) ? "on" : "off"}
-                            onClick={(event) => this.setRating(event, idx)}
-                            onMouseEnter={() => this.setHover(idx)}
-                            onMouseLeave={() => this.setHover(rating)}>
-                            <span className="star">&#9733;</span>
-                        </button>
-                    );
-                })}
-            </div>
-        );
+    const updateRate = (ev, idx) => {
+        ev.preventDefault()
+        setRating(idx)
+        onSaveRate(idx)
     }
+
+    return (
+        <div className="star-rating">
+            {[...Array(5)].map((star, idx) => {
+                idx += 1
+                return (
+                    <button
+                        key={idx}
+                        className={idx <= (hover || rating) ? "on" : "off"}
+                        onClick={(ev) => updateRate(ev, idx)}
+                        onMouseEnter={() => setHover(idx)}
+                        onMouseLeave={() => setHover(rating)}>
+                        {idx <= (hover || rating)
+                            ? <span className='star'>⭐</span>
+                            : <h4 className='star'>⭐</h4>
+                        }
+                    </button>
+                );
+            })}
+        </div>
+    )
 }

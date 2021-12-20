@@ -14,6 +14,10 @@
 @import "views/ToyApp";
 @import "views/LoginSignup";
 
+@import "views/ToyApp";
+@import "views/LoginSignup";
+@import "views/ToyDetails";
+
 // Cmps
 @import "cmps/AppHeader";
 @import "cmps/Modal";
@@ -22,3 +26,4 @@
 @import "cmps/ToyAdd";
 @import "cmps/ToyFilter";
 @import "cmps/ReviewList";
+@import "cmps/ReviewAdd";

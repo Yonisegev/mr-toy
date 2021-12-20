@@ -84,13 +84,12 @@ async function addToy(toy) {
   }
 }
 
-async function updateToy(toy, isReview = false) {
+async function updateToy(toy) {
   const user = userService.getLoggedinUser();
   try {
     const res = await axios.put(BASE_URL, {
       toy,
-      user,
-      isReview,
+      user
     });
     return res.data;
   } catch (err) {
@@ -116,6 +115,7 @@ function toyValidator(toy) {
 }
 
 function addReview(toy, review) {
+  console.log('toy', toy)
   toy.reviews.unshift(review);
   return toy;
 }

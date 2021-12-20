@@ -84,19 +84,19 @@ function _createReviews() {
     {
       name: 'Muki Ben Puki',
       rate: 4,
-      readAt: '10/09/2020',
+      addedAt: '10/09/2020',
       txt: 'Wow, thats a great game! im gonna play it so much!!',
     },
     {
       name: 'Shuki Laka Boom',
       rate: 1,
-      readAt: '25/07/2020',
+      addedAt: '25/07/2020',
       txt: 'Worst game EVAHHHHHHH, cant stand it!',
     },
     {
       name: 'Nana Banani',
       rate: 5,
-      readAt: '13/01/2021',
+      addedAt: '13/01/2021',
       txt: 'Played it with my entire family and loved every minute!!! wow!!!!!!!!!!!!!!!!!!',
     },
   ];
