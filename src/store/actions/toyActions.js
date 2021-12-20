@@ -1,3 +1,4 @@
+import { showErrorMsg, showSuccessMsg } from '../../services/eventBusService';
 import { toyService } from '../../services/toyService';
 
 export function loadToys() {
@@ -23,10 +24,10 @@ export function onAddToy(toy) {
         type: 'ADD_TOY',
         toy: savedToy,
       });
-      // showSuccessMsg('Toy added!');
+      showSuccessMsg('Toy added!');
     } catch (err) {
       console.log('Can not add toy', toy);
-      // showErrorMsg('Can not add toy');
+      showErrorMsg('Can not add toy');
     }
   };
 }
@@ -40,10 +41,10 @@ export function onUpdateToy(toy, isReview) {
         type: 'UPDATE_TOY',
         toy: savedToy,
       });
-      // showSuccessMsg('Updated toy!');
+      showSuccessMsg('Updated toy!');
     } catch (err) {
       console.log('Can not update toy', err);
-      // showErrorMsg('Can not update toy');
+      showErrorMsg('Can not update toy');
     }
   };
 }
