@@ -1,5 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { TextField, Button } from '@mui/material';
+import Loader from '../assets/img/loader.svg';
 
 import React from 'react';
 /*
@@ -31,14 +32,14 @@ export const FormikForm = ({
     }
     return errors;
   };
-  
+
   return (
     <Formik
       initialValues={initialValues}
       validate={validateForm}
       onSubmit={onFormSubmit}
     >
-      {({ isSubmitting, handleChange }) => (
+      {({ isSubmitting, handleChange, setSubmitting }) => (
         <Form>
           {fields.map((field, idx) => {
             return (
@@ -52,7 +53,12 @@ export const FormikForm = ({
                   as={textFieldOutlined}
                   key={idx + field.label}
                 />
-                <ErrorMessage key={field.label + idx} className='error' name={field.name} component='div' />
+                <ErrorMessage
+                  key={field.label + idx}
+                  className='error'
+                  name={field.name}
+                  component='div'
+                />
               </React.Fragment>
             );
           })}
@@ -62,7 +68,7 @@ export const FormikForm = ({
             color='success'
             disabled={isSubmitting}
           >
-            {buttonText}
+            {isSubmitting ? <img className="loader" src={Loader} alt="Loading..." /> :  buttonText }
           </Button>
           {error && <div className='error'>{error}</div>}
         </Form>

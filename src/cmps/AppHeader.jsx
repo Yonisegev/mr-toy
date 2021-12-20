@@ -49,7 +49,7 @@ export const AppHeader = () => {
           )}
         </div>
         <Link to='/'>Home</Link> |<Link to='/toy'> Toys</Link> |
-        <Link to='/toy/dashboard'> Statistics</Link> |
+        <Link to='/dashboard'> Statistics</Link> |
         <Link to='/about'> About</Link>
       </nav>
     </header>

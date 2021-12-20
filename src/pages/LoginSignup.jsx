@@ -20,7 +20,6 @@ export const LoginSignup = () => {
     try {
       await dispatch(isLogin ? onLogin(creds) : onSignup(creds));
       navigate('/toy');
-      // handleFormSubmissionSuccess(setSubmitting);
     } catch (err) {
      const errorMsg = isLogin
         ? 'Wrong username/password. Please try again.'
@@ -29,8 +28,6 @@ export const LoginSignup = () => {
       setError(errorMsg)
     } 
   };
-
-  const handleFormSubmissionSuccess = setSubmitting => {};
 
   return (
     <section className='login-signup'>
