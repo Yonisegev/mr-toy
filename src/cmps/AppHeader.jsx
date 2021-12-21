@@ -9,10 +9,6 @@ export const AppHeader = () => {
   const { user } = useSelector(state => state.userModule);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log('user: ', user);
-  }, [user]);
-
   return (
     <header>
       {/* <UserMsg /> */}

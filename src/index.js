@@ -23,9 +23,14 @@ ReactDOM.render(
             <Route index element={<HomePage />} />
             <Route path='toy' element={<ToyApp />}>
               <Route path='add' element={<ToyAdd />} />
-              <Route path='edit/:toyId' element={<PrivateRoute>
-                <ToyEdit />
-              </PrivateRoute>} />
+              <Route
+                path='edit/:toyId'
+                element={
+                  <PrivateRoute>
+                    <ToyEdit />
+                  </PrivateRoute>
+                }
+              />
             </Route>
             <Route path='/toy/:toyId' element={<ToyDetails />} />
             <Route path='login' element={<LoginSignup />} />

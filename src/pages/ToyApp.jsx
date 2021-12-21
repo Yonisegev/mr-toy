@@ -17,9 +17,6 @@ export const ToyApp = () => {
 
   const [isAdd, toggleIsAdd] = useToggle();
 
-  useEffect(()=>{
-    console.log('toys: ', toys)
-  },[toys])
   useEffect(() => {
     dispatch(loadToys());
   }, []);

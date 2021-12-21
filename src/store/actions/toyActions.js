@@ -24,10 +24,10 @@ export function onAddToy(toy) {
         type: 'ADD_TOY',
         toy: savedToy,
       });
-      showSuccessMsg('Toy added!');
+      showSuccessMsg({ txt: 'Toy added!' });
     } catch (err) {
       console.log('Can not add toy', toy);
-      showErrorMsg('Can not add toy');
+      showErrorMsg({ txt: 'Can not add toy' });
     }
   };
 }
@@ -40,10 +40,10 @@ export function onUpdateToy(toy) {
         type: 'UPDATE_TOY',
         toy: savedToy,
       });
-      showSuccessMsg('Updated toy!');
+      showSuccessMsg({ txt: 'Updated toy!' });
     } catch (err) {
       console.log('Can not update toy', err);
-      showErrorMsg('Can not update toy');
+      showErrorMsg({ txt: 'Can not update toy' });
     }
   };
 }
@@ -65,19 +65,16 @@ export function onSetFilter(filterBy) {
 export function onRemoveToy(toyId) {
   return async (dispatch) => {
     try {
-      await toyService.removeToy(toyId)
+      await toyService.removeToy(toyId);
       dispatch({
         type: 'REMOVE_TOY',
-        toyId
-      })
-      // showSuccessMsg('Toy deleted!')
-      return toyId
+        toyId,
+      });
+      showSuccessMsg({ txt: 'Toy deleted!' });
+      return toyId;
     } catch (err) {
-      console.log('Can not remove todo')
-      // showErrorMsg('Toy can not be deleted!')
+      console.log('Can not remove todo');
+      showErrorMsg({ txt: 'Toy can not be deleted!' });
     }
-  }
+  };
 }
-
-
-

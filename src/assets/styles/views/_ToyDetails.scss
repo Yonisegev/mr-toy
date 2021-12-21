@@ -49,6 +49,18 @@
     }
   }
 
+  .chat-icon {
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    font-size: 3em;
+    cursor: pointer;
+    transition: 0.2s all;
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
   .details-btns {
     button {
       border: 0;
