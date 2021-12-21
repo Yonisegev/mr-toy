@@ -17,7 +17,7 @@ export const ToyDetails = () => {
   const dispatch = useDispatch();
   const { toyId } = useParams();
 
-  const { user } = useSelector((state) => state.userModule);
+  const { user } = useSelector(state => state.userModule);
 
   const [toy, setToy] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -40,7 +40,7 @@ export const ToyDetails = () => {
 
   const loadReviews = async () => {
     try {
-      const reviews = await reviewService.query(toyId);
+      const reviews = await reviewService.query({ toyId });
       setReviews(reviews);
     } catch (err) {
       throw err;
@@ -98,7 +98,8 @@ export const ToyDetails = () => {
               <button
                 className='btn remove-btn'
                 alt='Return to list'
-                onClick={handleRemoveToy}>
+                onClick={handleRemoveToy}
+              >
                 <span className='fas fa-trash'></span>
               </button>
             )}
@@ -107,7 +108,8 @@ export const ToyDetails = () => {
               className='btn back-btn'
               onClick={() => {
                 navigate('/toy');
-              }}>
+              }}
+            >
               <span className='fas fa-th-large'></span>
             </button>
           </div>

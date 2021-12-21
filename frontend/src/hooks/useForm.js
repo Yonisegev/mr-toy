@@ -5,7 +5,7 @@ export function useForm(initialState) {
 
   const handleChange = ({ target }) => {
     let { value, name: field, type } = target;
-    if (!isNaN(value)) {
+    if (type === 'number') {
       value = +value;
     } else if (type === 'checkbox') {
       value = target.checked;
@@ -18,7 +18,7 @@ export function useForm(initialState) {
     (fieldname) => {
       return {
         name: fieldname,
-        value: formState[fieldname] || '',
+        value: formState[fieldname] ?? '',
         onChange: handleChange,
       };
     },

@@ -1,7 +1,7 @@
 import { showErrorMsg, showSuccessMsg } from '../../services/eventBusService';
 import { userService } from '../../services/userService';
 
-export function onLogin(creds) {
+export function login(creds) {
   return async (dispatch) => {
     try {
       const user = await userService.login(creds);
@@ -18,7 +18,7 @@ export function onLogin(creds) {
   };
 }
 
-export function onSignup(creds) {
+export function signup(creds) {
   return async (dispatch) => {
     try {
       const user = await userService.signup(creds);
@@ -33,7 +33,7 @@ export function onSignup(creds) {
   };
 }
 
-export function onLogout() {
+export function logout() {
   return async (dispatch) => {
     try {
       await userService.logout();

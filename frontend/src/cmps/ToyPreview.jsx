@@ -1,19 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { onRemoveToy } from '../store/actions/toyActions';
-import { Modal } from './Modal';
-import { ReviewAdd } from './ReviewAdd';
-import { ReviewList } from './ReviewList';
-
-export const ToyPreview = ({ toy }) => {
-  const dispatch = useDispatch();
-
-  const handleRemoveToy = (ev) => {
+export const ToyPreview = ({ toy, handleRemoveToy }) => {
+  const onRemoveToy = ev => {
     ev.stopPropagation();
-    dispatch(onRemoveToy(toy._id));
+    handleRemoveToy(toy._id);
   };
-
   return (
     <section className='toy-preview'>
       <h1 className='toy-name'>{toy.name}</h1>
@@ -26,21 +17,15 @@ export const ToyPreview = ({ toy }) => {
           </button>
         </Link>
 
-        {/* {user && user.isAdmin && ( */}
         <Link to={`/toy/edit/${toy._id}`}>
           <button className='btn edit-btn'>
             <span className='fas fa-edit'></span>
           </button>
         </Link>
-        {/* )} */}
-
-        {/* {user && user.isAdmin && ( */}
-        <button className='btn remove-btn' onClick={handleRemoveToy}>
+        <button className='btn remove-btn' onClick={onRemoveToy}>
           <span className='fas fa-trash'></span>
         </button>
-        {/* )} */}
       </div>
     </section>
   );
 };
-

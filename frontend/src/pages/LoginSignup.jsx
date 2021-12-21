@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { onLogin, onSignup } from '../store/actions/userActions';
+import { login, signup } from '../store/actions/userActions';
 import { FormikForm } from '../cmps/FormikForm';
 
 export const LoginSignup = () => {
@@ -18,15 +18,15 @@ export const LoginSignup = () => {
 
   const onFormSubmit = async (creds, { setSubmitting }) => {
     try {
-      await dispatch(isLogin ? onLogin(creds) : onSignup(creds));
+      await dispatch(isLogin ? login(creds) : signup(creds));
       navigate('/toy');
     } catch (err) {
-     const errorMsg = isLogin
+      const errorMsg = isLogin
         ? 'Wrong username/password. Please try again.'
         : 'Failed to sign up. Please try again.';
       setSubmitting(false);
-      setError(errorMsg)
-    } 
+      setError(errorMsg);
+    }
   };
 
   return (
@@ -50,10 +50,6 @@ export const LoginSignup = () => {
   );
 };
 
-/*  
-memo is un-needed, since anyway LoginSignup only state is isLogin, so in any case LoginSignup re-renders,
-we will want Login/Signup to render as well.
-*/
 const Login = ({ navigate, onFormSubmit, error }) => {
   const initialValues = {
     username: '',

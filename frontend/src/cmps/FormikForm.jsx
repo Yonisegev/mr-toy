@@ -4,7 +4,6 @@ import Loader from '../assets/img/loader.svg';
 
 import React from 'react';
 /*
-    This is a reuseable formik form component.
     Props:
     initialValues - initial values for the fields, f.e: {username: '', email: ''}
     fields[] - the attributes for the fields, as an array f.e: [{name: 'username', label: 'Username', required: true, type: 'text'}]

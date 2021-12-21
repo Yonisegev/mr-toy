@@ -1,46 +1,28 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useForm } from '../hooks/useForm.js';
 import { reviewService } from '../services/reviewService.js';
-import { Rating } from './Rating.jsx';
+import { StarRating } from './StarRating.jsx';
 
-const EMPTY_REVIEW = {
-  userId: '',
-  username: '',
-  txt: '',
-  rate: 1,
-  toyId: '',
-  toyName: '',
-  addedAt: new Date().toISOString().split('T')[0],
-};
+export const ReviewAdd = ({ toy, onAdd }) => {
+  const { user } = useSelector(state => state.userModule);
 
-export const ReviewAdd = memo(({ toy, onAdd }) => {
-  const { user } = useSelector((state) => state.userModule);
+  const INITIAL_REVIEW = {
+    ...reviewService.getEmptyReview(),
+    userId: user._id,
+    username: user.fullname,
+    toyId: toy._id,
+    toyName: toy.name,
+  }
 
-  const { formState, setFormState, register } = useForm(EMPTY_REVIEW);
-
+  const { formState, setFormState, register } = useForm(INITIAL_REVIEW);
   const [isAdd, setIsAdd] = useState(false);
 
-  useEffect(() => {
-    setFormState((prev) => ({
-      ...prev,
-      userId: user._id,
-      username: user.fullname,
-      toyId: toy._id,
-      toyName: toy.name,
-    }));
-  }, []);
-
   const resetForm = () => {
-    setFormState((prev) => ({
-      ...prev,
-      userId: user._id,
-      username: user.fullname,
-      toyId: toy._id,
-      toyName: toy.name,
-    }));
+    setFormState(INITIAL_REVIEW);
   };
-  const saveReview = async (ev) => {
+
+  const saveReview = async ev => {
     ev.preventDefault();
     const review = formState;
     await reviewService.add(review);
@@ -49,8 +31,8 @@ export const ReviewAdd = memo(({ toy, onAdd }) => {
     onToggleAddReview();
   };
 
-  const onSaveRate = (rate) => {
-    setFormState((prev) => ({ ...prev, rate }));
+  const onSaveRate = rate => {
+    setFormState(prev => ({ ...prev, rate }));
   };
 
   const onToggleAddReview = () => {
@@ -58,6 +40,7 @@ export const ReviewAdd = memo(({ toy, onAdd }) => {
   };
   return (
     <section className='review-add'>
+      {console.log('Rendered!')}
       {!isAdd && (
         <>
           <h1> Add review : </h1>
@@ -87,7 +70,7 @@ export const ReviewAdd = memo(({ toy, onAdd }) => {
 
             <label>
               Rate this book :
-              <Rating rate={formState.rate} onSaveRate={onSaveRate} />
+              <StarRating rate={formState.rate} onSaveRate={onSaveRate} />
             </label>
 
             <label>
@@ -111,4 +94,4 @@ export const ReviewAdd = memo(({ toy, onAdd }) => {
       )}
     </section>
   );
-});
+};

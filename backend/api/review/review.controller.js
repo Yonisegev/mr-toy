@@ -1,9 +1,9 @@
 const reviewService = require('./review.service')
 
 async function query(req, res) {
-    const { toyId } = req.query;
+    const filterBy = req.query;
     try {
-        const reviews = await reviewService.query(toyId)
+        const reviews = await reviewService.query(filterBy)
         res.json(reviews);
     } catch (err) {
         res.status(500).json({ err })

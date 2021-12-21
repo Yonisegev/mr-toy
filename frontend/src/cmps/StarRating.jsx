@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
-export const Rating = ({ onSaveRate }) => {
+export const StarRating = ({ onSaveRate }) => {
 
-    const [rating, setRating] = useState('')
+    const [rating, setRating] = useState(0)
     const [hover, setHover] = useState('')
 
     const updateRate = (ev, idx) => {
@@ -13,7 +13,7 @@ export const Rating = ({ onSaveRate }) => {
 
     return (
         <div className="star-rating">
-            {[...Array(5)].map((star, idx) => {
+            {[...Array(5)].map((_, idx) => {
                 idx += 1
                 return (
                     <button

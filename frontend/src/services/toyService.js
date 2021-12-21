@@ -1,8 +1,5 @@
-import Axios from 'axios';
-import { userService } from './userService.js';
-const axios = Axios.create({
-  withCredentials: true,
-});
+import { httpService } from './httpService.js';
+
 
 const gLabels = [
   'On wheels',
@@ -26,21 +23,20 @@ export const toyService = {
   updateToy,
   getToyById,
   getLabels,
-  addReview,
   toyValidator,
+  getEmptyToy
 };
 
-const BASE_URL = 'http://127.0.0.1:3030/api/toy'
+const BASE_URL = 'toy';
 
 async function query(filterBy = {}) {
   try {
     const filter = { ...filterBy };
-    if (filter.labels)
+    console.log('FILTER', filterBy);
+    if (filter.labels) {
       filter.labels = filter.labels.map((label) => label.label);
-    const { data } = await axios.get(BASE_URL, {
-      params: filter,
-    });
-    return data;
+    }
+    return httpService.get(BASE_URL, filter);
   } catch (err) {
     console.log('can not read toys from server', err);
     throw err;
@@ -49,8 +45,7 @@ async function query(filterBy = {}) {
 
 async function getToyById(toyId) {
   try {
-    const res = await axios.get(`${BASE_URL}/${toyId}`);
-    return res.data;
+    return httpService.get(`${BASE_URL}/${toyId}`);
   } catch (err) {
     console.log('can not read toy from server', err);
     throw err;
@@ -58,12 +53,8 @@ async function getToyById(toyId) {
 }
 
 async function removeToy(toyId) {
-  const user = userService.getLoggedinUser();
   try {
-    const res = await axios.delete(`${BASE_URL}/${toyId}`, {
-      data: { user },
-    });
-    return res;
+    return httpService.delete(`${BASE_URL}/${toyId}`);
   } catch (err) {
     console.log('can not delete toy from server', err);
     throw err;
@@ -71,13 +62,8 @@ async function removeToy(toyId) {
 }
 
 async function addToy(toy) {
-  const user = userService.getLoggedinUser();
   try {
-    const res = await axios.post(BASE_URL, {
-      toy,
-      user,
-    });
-    return res.data;
+    return httpService.post(BASE_URL, { toy });
   } catch (err) {
     console.log('can not add toy from server', err);
     throw err;
@@ -85,20 +71,15 @@ async function addToy(toy) {
 }
 
 async function updateToy(toy) {
-  const user = userService.getLoggedinUser();
   try {
-    const res = await axios.put(BASE_URL, {
-      toy,
-      user
-    });
-    return res.data;
+    return httpService.put(BASE_URL, { toy });
   } catch (err) {
     console.log('can not update toy from server', err);
     throw err;
   }
 }
 
- function getLabels() {
+function getLabels() {
   return gLabels;
 }
 
@@ -114,8 +95,10 @@ function toyValidator(toy) {
   };
 }
 
-function addReview(toy, review) {
-  console.log('toy', toy)
-  toy.reviews.unshift(review);
-  return toy;
+function getEmptyToy() {
+  return {
+    name: '',
+    price: '',
+    labels: [],
+  };
 }

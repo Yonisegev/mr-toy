@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { onLogout } from '../store/actions/userActions';
+import { logout } from '../store/actions/userActions';
 
 export const AppHeader = () => {
   const { user } = useSelector(state => state.userModule);
@@ -10,8 +10,6 @@ export const AppHeader = () => {
 
   return (
     <header>
-      {/* <UserMsg /> */}
-
       <Link to='/'>
         <div className='logo'>
           <h1>Mister Toy</h1>
@@ -19,7 +17,7 @@ export const AppHeader = () => {
       </Link>
 
       <nav>
-        <div className='login-container'>
+        <div className='user-info'>
           {!user && (
             <p>
               <Link to='/login'>
@@ -33,7 +31,7 @@ export const AppHeader = () => {
             <>
               Welcome {user.fullname} <br />
               <Button
-                onClick={() => dispatch(onLogout())}
+                onClick={() => dispatch(logout())}
                 variant='contained'
                 className='logout-btn'
                 size='small'
