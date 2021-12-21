@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router';
 import { Loader } from '../cmps/Loader';
-import { ToyAdd } from '../cmps/ToyAdd';
 import { ToyFilter } from '../cmps/ToyFilter';
 import { ToyList } from '../cmps/ToyList';
 import { useToggle } from '../hooks/useToggle';
@@ -17,9 +16,6 @@ export const ToyApp = () => {
 
   const [isAdd, toggleIsAdd] = useToggle();
 
-  useEffect(()=>{
-    console.log('toys: ', toys)
-  },[toys])
   useEffect(() => {
     dispatch(loadToys());
   }, []);

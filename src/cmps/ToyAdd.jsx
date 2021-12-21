@@ -53,6 +53,7 @@ export const ToyAdd = ({}) => {
     formState.labels = formState.labels.map(({ value }) => value);
     resetForm();
     dispatch(onAddToy(formState));
+    onCloseAddToy();
   };
 
   const onCloseAddToy = () => {
