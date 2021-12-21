@@ -80,7 +80,6 @@ export const ReviewAdd = memo(({ toy, onAdd }) => {
               Full Name :
               <input
                 type='text'
-                value=''
                 placeholder='Enter Full Name'
                 {...register('username')}
               />

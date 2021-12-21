@@ -18,7 +18,7 @@ export function useForm(initialState) {
     (fieldname) => {
       return {
         name: fieldname,
-        value: formState[fieldname] || null,
+        value: formState[fieldname] || '',
         onChange: handleChange,
       };
     },

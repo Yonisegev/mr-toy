@@ -21,7 +21,7 @@ export const Chat = ({ toy, onClose, isOpen }) => {
   const [messages, setMessages] = useState(INITIAL_STATE.messages);
   const [typingUser, setTypingUser] = useState(INITIAL_STATE.typingUser);
   const [topic, setTopic] = useState(toy);
-  const [isBotMode, toggleBotMode] = useToggle();
+  const [isBotMode, toggleBotMode] = useToggle(false);
 
   const botModeIntervalId = useRef();
 
@@ -56,9 +56,10 @@ export const Chat = ({ toy, onClose, isOpen }) => {
     // Handle case: send single bot response (debounce).
     botModeIntervalId.current && clearTimeout(botModeIntervalId);
     botModeIntervalId.current = setTimeout(() => {
-      setMessages((prevMessages) => ({
-        msgs: [...prevMessages, { from: 'Bot', txt: 'You are amazing!' }],
-      }));
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { from: 'Bot', txt: 'You are amazing!' },
+      ]);
     }, 1500);
   };
 
@@ -70,16 +71,17 @@ export const Chat = ({ toy, onClose, isOpen }) => {
     ev.preventDefault();
     const from = user.fullname || user.username || 'Me';
     socketService.emit('chat newMsg', { from, txt: currMessage.txt });
-    setCurrMessage(INITIAL_STATE.typingUser);
+    setCurrMessage(INITIAL_STATE.currMessage);
+    if (isBotMode) sendBotResponse();
   };
 
   const handleMessageChange = async (ev) => {
     const { name, value } = ev.target;
-    const user = {
+    const typingUser = {
       username: user.fullname || user.username || 'guest',
       msg: value,
     };
-    socketService.emit('typing', user);
+    socketService.emit('typing', typingUser);
 
     setCurrMessage((prevMessage) => ({ ...prevMessage, [name]: value }));
   };

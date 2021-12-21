@@ -41,7 +41,6 @@ export const ToyDetails = () => {
   const loadReviews = async () => {
     try {
       const reviews = await reviewService.query(toyId);
-      console.log('fetched reviews: ', reviews);
       setReviews(reviews);
     } catch (err) {
       throw err;
@@ -84,6 +83,7 @@ export const ToyDetails = () => {
               {toy.inStock ? 'Yes!' : 'Soon...'}
             </span>
           </h3>
+          <h3 className='avg-rating'>Toy Rating: {avgRating}</h3>
           {labels && <h3>Categories : {labels.join(' | ')}</h3>}
 
           <div className='details-btns'>
@@ -119,7 +119,7 @@ export const ToyDetails = () => {
         </div>
 
         <div className='reviews-container'>
-          <div className='avg-rating'>Toy Rating: {avgRating}</div>
+          
           {user ? (
             <ReviewAdd toy={toy} onAdd={handleAddReview} />
           ) : (
