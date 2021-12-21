@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { onLogout } from '../store/actions/userActions';
 

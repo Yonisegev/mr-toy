@@ -10,7 +10,7 @@ import { ReviewList } from '../cmps/ReviewList';
 import { useToggle } from '../hooks/useToggle';
 import { reviewService } from '../services/reviewService';
 import { toyService } from '../services/toyService';
-import { onRemoveToy, onUpdateToy } from '../store/actions/toyActions';
+import { onRemoveToy } from '../store/actions/toyActions';
 
 export const ToyDetails = () => {
   const navigate = useNavigate();
@@ -63,9 +63,8 @@ export const ToyDetails = () => {
 
   const avgRating = useMemo(() => {
     return (
-      (reviews.reduce((acc, { rate }) => acc + rate, 0) /
-      reviews.length).toFixed(1)
-    );
+      reviews.reduce((acc, { rate }) => acc + rate, 0) / reviews.length
+    ).toFixed(1);
   }, [reviews]);
 
   if (!toy) return <Loader />;
@@ -119,7 +118,6 @@ export const ToyDetails = () => {
         </div>
 
         <div className='reviews-container'>
-          
           {user ? (
             <ReviewAdd toy={toy} onAdd={handleAddReview} />
           ) : (
