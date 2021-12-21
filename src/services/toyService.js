@@ -98,7 +98,7 @@ async function updateToy(toy) {
   }
 }
 
-async function getLabels() {
+ function getLabels() {
   return gLabels;
 }
 
