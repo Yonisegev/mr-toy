@@ -11,14 +11,14 @@ import { useToggle } from '../hooks/useToggle';
 import { reviewService } from '../services/reviewService';
 import { toyService } from '../services/toyService';
 import { onRemoveToy } from '../store/actions/toyActions';
+import { showErrorMsg } from '../services/eventBusService';
 
 export const ToyDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { toyId } = useParams();
-
   const { user } = useSelector(state => state.userModule);
-
+  
   const [toy, setToy] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [isChatOpen, toggleChat] = useToggle();
@@ -67,11 +67,24 @@ export const ToyDetails = () => {
     ).toFixed(1);
   }, [reviews]);
 
+  const onChangePage = async diff => {
+    try {
+      const toyId = await toyService.getPrevNext(toy._id, diff);
+      navigate(`/toy/${toyId}`, { replace: true });
+    } catch (err) {
+      showErrorMsg({ txt: 'Something went wrong, please try again.' });
+    }
+  };
+
   if (!toy) return <Loader />;
   const { name, price, inStock, labels } = toy;
   return (
     <>
       <section className='details-container'>
+        <section className='pagination'>
+          <button onClick={() => onChangePage(-1)}>Prev</button>
+          <button onClick={() => onChangePage(1)}>Next</button>
+        </section>
         <div className='toy-details'>
           <h2>Name : {name} </h2>
 
@@ -115,7 +128,7 @@ export const ToyDetails = () => {
           </div>
 
           <div className='img-container'>
-            {/* <img src={toys} alt='toys' /> */}
+            <img src={`https://robohash.org/${toy._id}`} alt='toys' />
           </div>
         </div>
 

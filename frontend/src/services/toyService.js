@@ -24,7 +24,8 @@ export const toyService = {
   getToyById,
   getLabels,
   toyValidator,
-  getEmptyToy
+  getEmptyToy,
+  getPrevNext
 };
 
 const BASE_URL = 'toy';
@@ -101,4 +102,12 @@ function getEmptyToy() {
     price: '',
     labels: [],
   };
+}
+
+async function getPrevNext(toyId, diff) {
+  const toys = await query();
+  const currToyIdx = toys.findIndex(toy => toy._id === toyId);
+  if (currToyIdx === toys.length - 1 && diff > 0) return toys[0]._id;
+  else if (currToyIdx === 0 && diff < 0) return toys[toys.length - 1]._id;
+  return toys[currToyIdx + diff]._id;
 }
