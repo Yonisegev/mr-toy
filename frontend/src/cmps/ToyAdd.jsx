@@ -8,13 +8,14 @@ import { onAddToy } from '../store/actions/toyActions.js';
 import { Loader } from './Loader.jsx';
 import { Modal } from './Modal.jsx';
 
-const EMPTY_TOY = toyService.getEmptyToy();
 export const ToyAdd = ({}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   //local
-  const { formState, setFormState, register, resetForm } = useForm(EMPTY_TOY);
+  const { formState, setFormState, register, resetForm } = useForm(
+    toyService.getEmptyToy()
+  );
   const [labelOptions, setLabelOptions] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -24,22 +25,22 @@ export const ToyAdd = ({}) => {
 
   const loadLabels = async () => {
     const labels = await toyService.getLabels();
-    const labelOptions = labels.map(toyLabel => ({
+    const labelOptions = labels.map((toyLabel) => ({
       value: toyLabel,
       label: toyLabel,
     }));
     setLabelOptions(labelOptions);
   };
 
-  const handleSelectChange = selectedOptions => {
+  const handleSelectChange = (selectedOptions) => {
     if (selectedOptions.length > 3) return;
-    setFormState(prevToy => ({
+    setFormState((prevToy) => ({
       ...prevToy,
       labels: selectedOptions,
     }));
   };
 
-  const handleAddToy = ev => {
+  const handleAddToy = (ev) => {
     ev.preventDefault();
     const { valid, message } = toyService.toyValidator(formState);
     if (!valid) {

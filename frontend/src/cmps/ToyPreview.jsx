@@ -8,6 +8,7 @@ export const ToyPreview = ({ toy, handleRemoveToy }) => {
   return (
     <section className='toy-preview'>
       <h1 className='toy-name'>{toy.name}</h1>
+      <img className="toy-img" src={`https://robohash.org/${toy._id}`} alt='toy' />
       <h1 className='toy-price'>Price: ${toy.price}</h1>
       {!toy.inStock && <div className='sold-out-label'>Sold Out!</div>}
       <div className='btns'>

@@ -21,7 +21,7 @@ export const ToyApp = () => {
   }, []);
 
   const handleOpenAddToy = () => {
-    navigate('add');
+    navigate('edit');
   };
 
   const handleRemoveToy = (toyId) => {

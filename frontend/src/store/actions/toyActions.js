@@ -1,10 +1,10 @@
 import { showErrorMsg, showSuccessMsg } from '../../services/eventBusService';
 import { toyService } from '../../services/toyService';
 
-export function loadToys() {
+export function loadToys(filterBy) {
   return async (dispatch) => {
     try {
-      const toys = await toyService.query();
+      const toys = await toyService.query(filterBy);
       // console.log('toys: ', toys);
       dispatch({
         type: 'SET_TOYS',

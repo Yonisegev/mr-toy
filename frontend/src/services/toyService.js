@@ -1,6 +1,5 @@
 import { httpService } from './httpService.js';
 
-
 const gLabels = [
   'On wheels',
   'Car',
@@ -21,23 +20,24 @@ export const toyService = {
   removeToy,
   addToy,
   updateToy,
+  saveToy,
   getToyById,
   getLabels,
   toyValidator,
   getEmptyToy,
-  getPrevNext
+  getPrevNext,
+  getEmptyFilterBy,
 };
 
 const BASE_URL = 'toy';
 
 async function query(filterBy = {}) {
   try {
-    const filter = { ...filterBy };
-    console.log('FILTER', filterBy);
-    if (filter.labels) {
-      filter.labels = filter.labels.map((label) => label.label);
-    }
-    return httpService.get(BASE_URL, filter);
+    // const filter = { ...filterBy };
+    // if (filter.labels) {
+    //   filter.labels = filter.labels.map((label) => label.label);
+    // }
+    return httpService.get(BASE_URL, filterBy);
   } catch (err) {
     console.log('can not read toys from server', err);
     throw err;
@@ -62,6 +62,18 @@ async function removeToy(toyId) {
   }
 }
 
+async function saveToy(toy) {
+  try {
+    if (toy._id) {
+      return httpService.put(BASE_URL, { toy });
+    } else {
+      return httpService.post(BASE_URL, { toy });
+    }
+  } catch (err) {
+    console.log(`could not save toy `, err);
+    throw err;
+  }
+}
 async function addToy(toy) {
   try {
     return httpService.post(BASE_URL, { toy });
@@ -80,8 +92,9 @@ async function updateToy(toy) {
   }
 }
 
+//returns async value, since in real apps this data would probably live in the backend.
 function getLabels() {
-  return gLabels;
+  return Promise.resolve(gLabels);
 }
 
 function toyValidator(toy) {
@@ -110,4 +123,12 @@ async function getPrevNext(toyId, diff) {
   if (currToyIdx === toys.length - 1 && diff > 0) return toys[0]._id;
   else if (currToyIdx === 0 && diff < 0) return toys[toys.length - 1]._id;
   return toys[currToyIdx + diff]._id;
+}
+
+function getEmptyFilterBy() {
+  return {
+    word: '',
+    type: '',
+    labels: [],
+  };
 }

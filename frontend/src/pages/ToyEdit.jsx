@@ -3,18 +3,19 @@ import { useParams } from 'react-router';
 import { useNavigate } from 'react-router';
 import { toyService } from '../services/toyService';
 import { useForm } from '../hooks/useForm.js';
-import { onUpdateToy, onRemoveToy } from '../store/actions/toyActions.js';
+import {
+  onUpdateToy,
+  onRemoveToy,
+  onAddToy,
+} from '../store/actions/toyActions.js';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Loader } from '../cmps/Loader';
 import { Modal } from '../cmps/Modal';
 import { useToggle } from '../hooks/useToggle';
+import { showErrorMsg } from '../services/eventBusService';
 
-const EMPTY_TOY = {
-  name: '',
-  price: '',
-  labels: [],
-};
+const EMPTY_TOY = toyService.getEmptyToy();
 
 export const ToyEdit = () => {
   const { toyId } = useParams();
@@ -22,10 +23,12 @@ export const ToyEdit = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
   const { formState, setFormState, register, resetForm } = useForm(EMPTY_TOY);
-  const [isLoading, setIsLoading] = useToggle(true);
+  const [isLoading, setIsLoading] = useToggle();
 
   useEffect(() => {
-    loadToy();
+    if (toyId) {
+      loadToy();
+    }
   }, []);
 
   const loadToy = async () => {
@@ -36,16 +39,19 @@ export const ToyEdit = () => {
       setIsLoading(false);
     } catch (err) {
       console.log(err);
-      // TODO: handle error
+      showErrorMsg({
+        txt: `We are sorry! there was an error trying to get toy ${toyId}`,
+      });
+      navigate('/toy');
     }
   };
 
-  const handleRemoveToy = ev => {
+  const handleRemoveToy = (ev) => {
     ev.stopPropagation();
     dispatch(onRemoveToy(formState._id));
   };
 
-  const handleUpdateToy = ev => {
+  const handleSaveToy = (ev) => {
     ev.preventDefault();
     const { valid, message } = toyService.toyValidator(formState);
     if (!valid) {
@@ -53,7 +59,7 @@ export const ToyEdit = () => {
       return;
     }
     resetForm();
-    dispatch(onUpdateToy(formState));
+    dispatch(toyId ? onUpdateToy(formState) : onAddToy(formState));
     navigate('/toy');
   };
 
@@ -61,7 +67,7 @@ export const ToyEdit = () => {
     navigate('/toy');
   };
 
-  if (isLoading) return <Loader />;
+  if (toyId && isLoading) return <Loader />;
   return (
     <Modal center onClose={handleGoBack}>
       <div className='toy-details toy-edit flex column'>
@@ -89,7 +95,7 @@ export const ToyEdit = () => {
           )}
 
           <div className='details-btns'>
-            <button className='save-btn' onClick={handleUpdateToy}>
+            <button className='save-btn' onClick={handleSaveToy}>
               <span className='fas fa-save'></span>
             </button>
 
@@ -99,13 +105,14 @@ export const ToyEdit = () => {
               </button>
             </Link>
 
-            <button
-              className='btn remove-btn'
-              alt='Return to list'
-              onClick={handleRemoveToy}
-            >
-              <span className='fas fa-trash'></span>
-            </button>
+            {toyId && (
+              <button
+                className='btn remove-btn'
+                alt='Return to list'
+                onClick={handleRemoveToy}>
+                <span className='fas fa-trash'></span>
+              </button>
+            )}
 
             <button className='btn back-btn' onClick={handleGoBack}>
               <span className='fas fa-th-large'></span>
