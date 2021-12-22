@@ -73,7 +73,7 @@ export function onRemoveToy(toyId) {
       showSuccessMsg({ txt: 'Toy deleted!' });
       return toyId;
     } catch (err) {
-      console.log('Can not remove todo');
+      console.log('Can not remove toy');
       showErrorMsg({ txt: 'Toy can not be deleted!' });
     }
   };

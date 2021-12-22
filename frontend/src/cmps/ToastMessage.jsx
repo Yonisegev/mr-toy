@@ -1,7 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useEffect } from 'react/cjs/react.development';
 import { eventBusService } from '../services/eventBusService';
-import { useUpdateEffect } from '../hooks/useUpdateEffect';
 import Alert from '@mui/material/Alert';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,12 +11,12 @@ export const ToastMessage = () => {
     eventBusService.on('show-toast-message', onAddMessage);
   }, []);
 
-  const onAddMessage = (message) => {
+  const onAddMessage = message => {
     message.id = uuidv4();
-    setMessages((prevMessages) => [message, ...prevMessages]);
+    setMessages(prevMessages => [message, ...prevMessages]);
     setTimeout(() => {
-      setMessages((prevMessages) =>
-        prevMessages.filter((currMessage) => currMessage.id !== message.id)
+      setMessages(prevMessages =>
+        prevMessages.filter(currMessage => currMessage.id !== message.id)
       );
     }, 4000);
   };
@@ -28,7 +27,8 @@ export const ToastMessage = () => {
           key={idx}
           style={{ top: `${50 * (idx + 1)}px` }}
           className={`toast-message`}
-          severity={type}>
+          severity={type}
+        >
           {txt}
         </Alert>
       ))

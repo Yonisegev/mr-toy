@@ -9,7 +9,6 @@ import { Route, Routes } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
 import { ToyApp } from './pages/ToyApp';
-import { ToyAdd } from './cmps/ToyAdd';
 import { LoginSignup } from './pages/LoginSignup';
 import { ToyEdit } from './pages/ToyEdit';
 import { ToyDetails } from './pages/ToyDetails';

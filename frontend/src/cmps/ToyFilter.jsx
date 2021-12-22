@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Select from 'react-select';
 import { toyService } from '../services/toyService';
@@ -7,7 +7,7 @@ import { useUpdateEffect } from '../hooks/useUpdateEffect';
 import debounce from 'lodash.debounce';
 import { useSearchParams } from 'react-router-dom';
 
-export const ToyFilter = () => {
+export const ToyFilter = memo(() => {
   const [searchParams, setSearchParams] = useSearchParams({});
   const [labelOptions, setLabelOptions] = useState([]);
   const dispatch = useDispatch();
@@ -17,7 +17,8 @@ export const ToyFilter = () => {
     type: searchParams.get('type') || '',
     labels: searchParams.getAll('labels'),
   };
-
+  // Without memo, this changes the toys in the store, which will cause ToyApp to re-render,
+  // and as a result will re-render ToyFilter which dispatches loadToys and causes an infinite loop
   useEffect(() => {
     loadLabels();
     dispatch(loadToys(filterBy));
@@ -89,4 +90,4 @@ export const ToyFilter = () => {
       />
     </form>
   );
-};
+});

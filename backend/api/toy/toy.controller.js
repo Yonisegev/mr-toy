@@ -46,6 +46,8 @@ async function addToy(req, res) {
 async function updateToy(req, res) {
     try {
         const { toy } = req.body;
+        const { user } = req.session.user;
+        console.log('USER', user);
         const savedToy = await toyService.update(toy);
         console.log('toy to save', savedToy);
         res.json(savedToy);
