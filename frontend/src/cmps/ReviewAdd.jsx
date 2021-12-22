@@ -40,7 +40,6 @@ export const ReviewAdd = ({ toy, onAdd }) => {
   };
   return (
     <section className='review-add'>
-      {console.log('Rendered!')}
       {!isAdd && (
         <>
           <h1> Add review : </h1>

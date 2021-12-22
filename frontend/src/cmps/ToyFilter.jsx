@@ -2,55 +2,66 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Select from 'react-select';
 import { toyService } from '../services/toyService';
-import { onSetFilter } from '../store/actions/toyActions';
+import { loadToys } from '../store/actions/toyActions';
 import { useUpdateEffect } from '../hooks/useUpdateEffect';
+import debounce from 'lodash.debounce';
+import { useSearchParams } from 'react-router-dom';
 
 export const ToyFilter = () => {
-  const [filterBy, setFilterBy] = useState({
-    word: '',
-    type: '',
-    labels: [],
-  });
-  const [options, setOptions] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const [labelOptions, setLabelOptions] = useState([]);
   const dispatch = useDispatch();
+
+  const filterBy = {
+    word: searchParams.get('word') || '',
+    type: searchParams.get('type') || '',
+    labels: searchParams.getAll('labels'),
+  };
 
   useEffect(() => {
     loadLabels();
+    dispatch(loadToys(filterBy));
   }, []);
 
   useUpdateEffect(() => {
-    dispatch(onSetFilter(filterBy));
+    onSetFilter(filterBy);
   }, [filterBy]);
+
+  const onSetFilter = useCallback(
+    debounce((filterBy) => {
+      dispatch(loadToys(filterBy));
+    }, 400),
+    []
+  );
 
   const loadLabels = useCallback(async () => {
     const labels = await toyService.getLabels();
-    const options = labels.map((label) => ({
-      value: label,
-      label,
+    const options = labels.map((toyLabel) => ({
+      value: toyLabel,
+      label: toyLabel,
     }));
-    setOptions(options);
+    setLabelOptions(options);
   }, []);
 
   const handleChange = ({ target: { name, value } }) => {
-    setFilterBy((prevFilterBy) => ({ ...prevFilterBy, [name]: value }));
+    setSearchParams({ ...filterBy, [name]: value }, { replace: true });
   };
 
   const handleSelectChange = (selectedOptions) => {
     if (selectedOptions.length > 3) return;
-    setFilterBy((prevFilterBy) => ({
-      ...prevFilterBy,
-      labels: selectedOptions,
-    }));
+    setSearchParams(
+      {
+        ...filterBy,
+        labels: selectedOptions.map(({ value }) => value),
+      },
+      { replace: true }
+    );
   };
 
   const { word, type, labels } = filterBy;
 
   return (
     <form className='toy-filter'>
-      <div className='search-img'>
-        <span className='fas fa-search'></span>
-      </div>
-
       <select name='type' onChange={handleChange} value={type}>
         <option value=''>All</option>
         <option value='instock'>In Stock</option>
@@ -70,10 +81,10 @@ export const ToyFilter = () => {
 
       <Select
         className='select'
-        value={labels}
+        value={labels.map((value) => ({ value, label: value }))}
         isMulti
         onChange={handleSelectChange}
-        options={options}
+        options={labelOptions}
         placeholder='Choose up to 3 labels :'
       />
     </form>

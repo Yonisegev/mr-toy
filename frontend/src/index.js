@@ -24,16 +24,18 @@ ReactDOM.render(
           <Route path='/' element={<App />}>
             <Route index element={<HomePage />} />
             <Route path='toy' element={<ToyApp />}>
+              {/* EDIT */}
               <Route
-                path='add'
+                path='edit/:toyId'
                 element={
                   <PrivateRoute>
-                    <ToyAdd />
+                    <ToyEdit />
                   </PrivateRoute>
                 }
               />
+              {/* ADD */}
               <Route
-                path='edit/:toyId'
+                path='edit'
                 element={
                   <PrivateRoute>
                     <ToyEdit />
@@ -44,7 +46,7 @@ ReactDOM.render(
             <Route path='/toy/:toyId' element={<ToyDetails />} />
             <Route path='login' element={<LoginSignup />} />
             <Route path='register' element={<LoginSignup />} />
-            <Route path="dashboard" element={<Dashboard />} />
+            <Route path='dashboard' element={<Dashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>

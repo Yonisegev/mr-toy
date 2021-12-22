@@ -17,7 +17,7 @@ export const ToyDetails = () => {
   const dispatch = useDispatch();
   const { toyId } = useParams();
 
-  const { user } = useSelector(state => state.userModule);
+  const { user } = useSelector((state) => state.userModule);
 
   const [toy, setToy] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -70,70 +70,68 @@ export const ToyDetails = () => {
   if (!toy) return <Loader />;
   const { name, price, inStock, labels } = toy;
   return (
-    <>
-      <section className='details-container'>
-        <div className='toy-details'>
-          <h2>Name : {name} </h2>
+    <section className='details-container'>
+      <div className='toy-details'>
+        <h2>Name : {name} </h2>
 
-          <h3>Price : ${price}</h3>
-          <h3>
-            Available :{' '}
-            <span className={inStock ? 'green' : 'red'}>
-              {toy.inStock ? 'Yes!' : 'Soon...'}
-            </span>
-          </h3>
-          <h3 className='avg-rating'>Toy Rating: {avgRating}</h3>
-          {labels && <h3>Categories : {labels.join(' | ')}</h3>}
+        <h3>Price : ${price}</h3>
+        <h3>
+          Available :{' '}
+          <span className={inStock ? 'green' : 'red'}>
+            {toy.inStock ? 'Yes!' : 'Soon...'}
+          </span>
+        </h3>
+        <h3 className='avg-rating'>
+          Toy Rating: {isNaN(avgRating) ? 'No Rating Yet.' : avgRating}
+        </h3>
+        {labels && <h3>Categories : {labels.join(' | ')}</h3>}
 
-          <div className='details-btns'>
-            {user && user.isAdmin && (
-              <Link to={`/toy/edit/${toy._id}`}>
-                <button className='btn edit-btn'>
-                  <span className='fas fa-edit'></span>
-                </button>
-              </Link>
-            )}
-
-            {user && user.isAdmin && (
-              <button
-                className='btn remove-btn'
-                alt='Return to list'
-                onClick={handleRemoveToy}
-              >
-                <span className='fas fa-trash'></span>
+        <div className='details-btns'>
+          {user && user.isAdmin && (
+            <Link to={`/toy/edit/${toy._id}`}>
+              <button className='btn edit-btn'>
+                <span className='fas fa-edit'></span>
               </button>
-            )}
-
-            <button
-              className='btn back-btn'
-              onClick={() => {
-                navigate('/toy');
-              }}
-            >
-              <span className='fas fa-th-large'></span>
-            </button>
-          </div>
-
-          <div className='img-container'>
-            {/* <img src={toys} alt='toys' /> */}
-          </div>
-        </div>
-
-        <div className='reviews-container'>
-          {user ? (
-            <ReviewAdd toy={toy} onAdd={handleAddReview} />
-          ) : (
-            <div>
-              Please <Link to='/login'>login</Link> to add a review
-            </div>
+            </Link>
           )}
-          <ReviewList reviews={reviews} />
-          <div className='chat-icon' onClick={toggleChat}>
-            <i className='fas fa-comment-dots'></i>
-          </div>
-          <Chat toy={toy} isOpen={isChatOpen} onClose={toggleChat} />
+
+          {user && user.isAdmin && (
+            <button
+              className='btn remove-btn'
+              alt='Return to list'
+              onClick={handleRemoveToy}>
+              <span className='fas fa-trash'></span>
+            </button>
+          )}
+
+          <button
+            className='btn back-btn'
+            onClick={() => {
+              navigate('/toy');
+            }}>
+            <span className='fas fa-th-large'></span>
+          </button>
         </div>
-      </section>
-    </>
+
+        <div className='img-container'>
+          {/* <img src={toys} alt='toys' /> */}
+        </div>
+      </div>
+
+      <div className='reviews-container'>
+        {user ? (
+          <ReviewAdd toy={toy} onAdd={handleAddReview} />
+        ) : (
+          <div>
+            Please <Link to='/login'>login</Link> to add a review
+          </div>
+        )}
+        <ReviewList reviews={reviews} />
+        <div className='chat-icon' onClick={toggleChat}>
+          <i className='fas fa-comment-dots'></i>
+        </div>
+        <Chat toy={toy} isOpen={isChatOpen} onClose={toggleChat} />
+      </div>
+    </section>
   );
 };
