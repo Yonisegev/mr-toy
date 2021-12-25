@@ -1,0 +1,22 @@
+.store-branches {
+    display: flex;
+    .map-container {
+        flex-basis: 60%;
+    }
+    .branch-list {
+        margin-inline-start: 1rem;
+        h3 {
+            font-family: "Nunito-Bold", sans-serif;
+            font-size: 2rem;
+        }
+        .branch:not(:last-of-type) {
+            margin-block-end: 1rem;
+        }
+        .branch-name {
+            cursor: pointer;
+            font-size: 1.5rem;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+    }
+}

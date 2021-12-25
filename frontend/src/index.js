@@ -14,6 +14,7 @@ import { ToyEdit } from './pages/ToyEdit';
 import { ToyDetails } from './pages/ToyDetails';
 import { Dashboard } from './pages/Dashboard';
 import { PrivateRoute } from './cmps/PrivateOutlet';
+import { About } from './pages/About';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -46,6 +47,7 @@ ReactDOM.render(
             <Route path='login' element={<LoginSignup />} />
             <Route path='register' element={<LoginSignup />} />
             <Route path='dashboard' element={<Dashboard />} />
+            <Route path="about" element={<About />} />
           </Route>
         </Routes>
       </BrowserRouter>

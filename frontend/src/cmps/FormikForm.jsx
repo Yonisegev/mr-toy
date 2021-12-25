@@ -1,7 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { TextField, Button } from '@mui/material';
 import Loader from '../assets/img/loader.svg';
-
 import React from 'react';
 /*
     Props:
